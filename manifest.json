@@ -1,0 +1,50 @@
+{
+    "name": "Anti-Brainrot",
+    "description": "Stop brainrotting",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "nerd.png"
+    },
+    "permissions": [],
+    "host_permissions": [
+        "*://www.youtube.com/*",
+        "*://x.com/*",
+        "*://www.instagram.com/*",
+        "*://www.reddit.com/*",
+        "*://www.tiktok.com/*",
+        "*://www.twitch.tv/*"
+    ],
+    "content_scripts" : [
+        {
+            "matches": [
+                "*://www.youtube.com/*",
+                "*://x.com/*",
+                "*://www.instagram.com/*",
+                "*://www.reddit.com/*",
+                "*://www.tiktok.com/*",
+                "*://www.twitch.tv/*"
+            ],
+            "js": ["content.js"],
+            "css": ["styles.css"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+    {
+        "resources": [
+            "overlay.html",
+            "styles.css"
+        ],
+        "matches": [
+            "*://www.youtube.com/*",
+            "*://x.com/*",
+            "*://www.instagram.com/*",
+            "*://www.reddit.com/*",
+            "*://www.tiktok.com/*",
+            "*://www.twitch.tv/*"
+        ]
+    }
+  ]
+}

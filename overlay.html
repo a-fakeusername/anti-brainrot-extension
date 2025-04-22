@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blocked</title>
+    <style>
+        /* Basic styles for the content INSIDE the overlay iframe */
+        body {
+            display: flex;
+            flex-direction: column; /* Stack elements vertically */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgba(0, 0, 0, 0.9); /* Background of the overlay content */
+            color: white;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px; /* Add space below heading */
+        }
+        /* Style the close button */
+        #close-overlay-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #333; /* Dark text */
+            background-color: #eee; /* Light grey background */
+            border: 1px solid #ccc;
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            transition: background-color 0.2s ease; /* Smooth hover effect */
+        }
+        #close-overlay-button:hover {
+            background-color: #ddd; /* Slightly darker on hover */
+        }
+        #close-overlay-button:active {
+            background-color: #ccc; /* Slightly darker when clicked */
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>STOP BRAINROTTING 🤓🤓🤓</h1>
+    <button id="close-overlay-button">Close Overlay</button>
+
+    <script src="overlay.js"></script>
+</body>
+</html>
