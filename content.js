@@ -37,15 +37,6 @@ function removeBlockingOverlay() {
  * @param {MessageEvent} event - The message event object.
 */
 function handleMessages(event) {
-    // IMPORTANT: Check the origin for security if the overlay could be hosted elsewhere
-    // or if the message contained sensitive data. For a simple close action from
-    // a chrome-extension:// URL, checking the type might be sufficient.
-    // Example origin check:
-    // if (event.origin !== chrome.runtime.getURL('').slice(0, -1)) { // Get base extension origin
-    //     console.warn('Message received from unexpected origin:', event.origin);
-    //     return;
-    // }
-    
     // Check if the message is the one we expect from our overlay
     if (event.data && event.data.type === 'CLOSE_OVERLAY') {
         console.log('Received CLOSE_OVERLAY message from iframe.');
