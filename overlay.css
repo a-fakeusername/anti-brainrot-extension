@@ -36,7 +36,7 @@ h1 {
     font-size: 1rem;
     color: #333; /* Dark text */
     background-color: #e11; /* Light grey background */
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 5px; /* Rounded corners */
     cursor: pointer;
     transition: background-color 0.2s ease; /* Smooth hover effect */
@@ -50,19 +50,41 @@ h1 {
 
 /* Medium sized square to hold puzzle */
 .puzzle-container {
-    height: 50%;
+    height: 60%;
     aspect-ratio: 1; /* Maintain a square aspect ratio */
-    display: flex;
+    display: grid;
     justify-content: center;
     align-items: center;
     margin-top: 20px; /* Space above the puzzle */
     background-color: #fff; /* White background for the puzzle */
     border-radius: 10px; /* Rounded corners */
-    border: 2px solid #ccc;
+    border: 1px solid black;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+
+    gap: 1px; /* Small gap between tiles */
+    background-color: #000; /* Black background for the gaps */
+    overflow: hidden; /* Ensure contents don't overflow the container */
 }
 
 /* Hide the puzzle container when not needed */
 .puzzle-container[hidden] {
     display: none !important;
+}
+
+#minesweeper-container {
+    aspect-ratio: 1.25; /* Maintain a rectangular aspect ratio */
+}
+
+.puzzle-tile {
+    width: 100%; /* Full width of the tile */
+    height: 100%; /* Full height of the tile */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    background-color: #ccc; /* Light grey background for tiles */
+
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
 }
