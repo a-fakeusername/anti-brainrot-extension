@@ -35,18 +35,43 @@
     padding: 10px 20px;
     font-size: 1rem;
     color: #333; /* Dark text */
-    background-color: #e11; /* Light grey background */
+    background-color: #e11; /* Red background */
     border: 1px solid black;
     border-radius: 5px; /* Rounded corners */
     cursor: pointer;
     transition: background-color 0.2s ease; /* Smooth hover effect */
 }
 #close-overlay-button:hover {
-    background-color: #d11; /* Slightly darker on hover */
+    background-color: #c11; /* Slightly darker on hover */
 }
 #close-overlay-button:active {
-    background-color: #c00; /* Slightly darker when clicked */
+    background-color: #a00; /* Slightly darker when clicked */
 }
+
+#reset-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #333; /* Dark text */
+    background-color: #ec1; /* Yellow/Orange background */
+    border: 1px solid black;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* Smooth hover effect */
+}
+
+#reset-button:hover {
+    background-color: #ca1; /* Slightly darker on hover */
+}
+#reset-button:active {
+    background-color: #a80; /* Slightly darker when clicked */
+}
+
+#timer {
+    font-size: 1.5rem; /* Larger font for the timer */
+    color: #fff; /* White text for the timer */
+}
+
+/* -------------------- Puzzle Styles -------------------- */
 
 /* Medium sized square to hold puzzle */
 .puzzle-container {

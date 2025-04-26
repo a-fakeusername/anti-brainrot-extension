@@ -1,5 +1,4 @@
 const winMessage = 'omg u won!';
-
 const loseMessage = 'u lost 🤓, maybe shud lock in';
 
 const dirs = [
@@ -16,6 +15,13 @@ const DIFFICULTY = {
 };
 
 let currentDifficulty = DIFFICULTY.MEDIUM; // Default difficulty
+let timer = 0; // Timer variable in ms
+let elapsedTime = 0; // Elapsed time variable in ms
+
+function onWin() {
+    alert(`${winMessage}\nTime: ${Math.floor(elapsedTime / 1000)}s`); // Show win message
+    window.parent.postMessage({ type: 'CLOSE_OVERLAY' }, '*'); // Close overlay on win
+}
 
 // -------------------- Sliding Puzzle Game Logic --------------------
 
@@ -50,8 +56,7 @@ function runSlidingPuzzle() {
                     // Check for win condition
                     const isWin = grid.every((row, rowIndex) => row.every((tile, colIndex) => tile === rowIndex * grid[0].length + colIndex || tile === null));
                     if (isWin) {
-                        alert(winMessage);
-                        window.parent.postMessage({ type: 'CLOSE_OVERLAY' }, '*'); // Close overlay on win
+                        onWin(); // Call win function
                     }
                 }
             });
@@ -124,7 +129,7 @@ function getSlidingPuzzleTileColor(val, gridSize) {
     // Calculate position in spectrum - value between 0 and 1
     const i = Math.floor(val / gridSize); // Row index (0-5)
     const j = val % gridSize; // Column index (0-5)
-    const position = Math.min(i, j) / (gridSize - 1); // Normalize to [0, 1]
+    const position = Math.min(i, j) / (gridSize - 2); // Normalize to [0, 1]
     
     // Red to Yellow to Green gradient
     let r, g;
@@ -170,8 +175,7 @@ function runMinesweeper() {
                     revealMinesweeperCell(grid, tiles, visible, i, j); // Reveal the clicked cell
                     updateMinesweeper(grid, tiles, visible); // Redraw the grid with updated visibility
                     if (checkMinesweeperWin(grid, visible)) {
-                        alert(winMessage);
-                        window.parent.postMessage({ type: 'CLOSE_OVERLAY' }, '*'); // Close overlay on win
+                        onWin(); // Call win function if all non-mine cells are revealed
                     }
                 }
             });
@@ -304,8 +308,7 @@ function runLightsOut() {
                 const isWin = grid.every(row => row.every(cell => !cell)); // Check if all lights are off
                 updateLightsOut(grid, tiles); // Redraw the grid with updated state
                 if (isWin) {
-                    alert(winMessage);
-                    window.parent.postMessage({ type: 'CLOSE_OVERLAY' }, '*'); // Close overlay on win
+                    onWin(); // Call win function
                 }
 
             });
@@ -365,6 +368,8 @@ function updateLightsOut(grid, tiles) {
     });
 }
 
+let resetting = true;
+
 // Game
 function startGame() {
     chrome.storage.local.get(['difficulty'], (result) => {
@@ -389,7 +394,38 @@ function startGame() {
                 runLightsOut();
                 break;
         }
+
+        timer = Date.now();
+        elapsedTime = 0;
+        resetting = false;
     });
 }
 
 startGame(); // Start the game
+
+// Update the timer every 100 milliseconds
+const updateTimer = () => {
+    if (!resetting) {
+        const currentTime = Date.now();
+        elapsedTime += currentTime - timer;
+        timer = currentTime;
+        
+        // Display time if needed
+        const timerElement = document.getElementById('timer');
+        if (timerElement) {
+            const seconds = Math.floor(elapsedTime / 1000);
+            timerElement.textContent = `Time: ${seconds}s`;
+        }
+    }
+    setTimeout(updateTimer, 100);
+};
+
+// Start the timer
+setTimeout(updateTimer, 100);
+
+const resetButton = document.getElementById('reset-button');
+resetButton.addEventListener('click', () => {
+    if (resetting) return; // Ignore clicks if resetting
+    resetting = true; // Set flag to prevent further clicks
+    startGame(); // Restart the game
+});
