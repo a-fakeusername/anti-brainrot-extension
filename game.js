@@ -1,3 +1,6 @@
+const winMessage = 'omg u won!';
+
+const loseMessage = 'u lost 🤓, maybe shud lock in';
 
 const dirs = [
     [0, 1], // Right
@@ -38,7 +41,7 @@ function runSlidingPuzzle() {
                     // Check for win condition
                     const isWin = grid.every((row, rowIndex) => row.every((tile, colIndex) => tile === rowIndex * grid[0].length + colIndex || tile === null));
                     if (isWin) {
-                        alert('You win! Puzzle solved!');
+                        alert(winMessage);
                         window.parent.postMessage({ type: 'CLOSE_OVERLAY' }, '*'); // Close overlay on win
                     }
                 }
@@ -147,7 +150,7 @@ function runMinesweeper() {
                 const cellValue = grid[i][j];
                 if (cellValue === -1) {
                     enabled = false; // Disable further clicks
-                    alert('Game Over! You hit a mine!');
+                    alert(loseMessage);
 
                     grid = generateMinesweeperGrid(20, 25, 99); // Regenerate the grid
                     visible = Array.from({ length: grid.length }, () => Array(grid[0].length).fill(false)); // Reset visibility
@@ -157,7 +160,7 @@ function runMinesweeper() {
                     revealMinesweeperCell(grid, tiles, visible, i, j); // Reveal the clicked cell
                     updateMinesweeper(grid, tiles, visible); // Redraw the grid with updated visibility
                     if (checkMinesweeperWin(grid, visible)) {
-                        alert('You win! Puzzle solved!');
+                        alert(winMessage);
                         window.parent.postMessage({ type: 'CLOSE_OVERLAY' }, '*'); // Close overlay on win
                     }
                 }
@@ -289,7 +292,7 @@ function runLightsOut() {
                 const isWin = grid.every(row => row.every(cell => !cell)); // Check if all lights are off
                 updateLightsOut(grid, tiles); // Redraw the grid with updated state
                 if (isWin) {
-                    alert('You win! All lights are off!');
+                    alert(winMessage);
                     window.parent.postMessage({ type: 'CLOSE_OVERLAY' }, '*'); // Close overlay on win
                 }
 
