@@ -354,21 +354,20 @@ function updateLightsOut(grid, tiles) {
 }
 
 // Game
-runMinesweeper();
-// switch (Math.floor(Math.random() * 3)) {
-    // case 0:
-    //     // 6x6 Sliding Puzzle
-    //     console.log('Running Sliding Puzzle...');
-    //     runSlidingPuzzle();
-    //     break;
-    // case 1:
-    //     // 20x25 99 Minesweeper
-    //     console.log('Running Minesweeper...');
-    //     runMinesweeper();
-    //     break;
-    // case 2:
-    //     // 9x9 Lights Out
-    //     console.log('Running Lights Out...');
-    //     runLightsOut();
-    //     break;
-// }
+switch (Math.floor(Math.random() * 3)) {
+    case 0:
+        // 6x6 Sliding Puzzle
+        console.log('Running Sliding Puzzle...');
+        runSlidingPuzzle();
+        break;
+    case 1:
+        // 20x25 99 Minesweeper
+        console.log('Running Minesweeper...');
+        runMinesweeper();
+        break;
+    case 2:
+        // 9x9 Lights Out
+        console.log('Running Lights Out...');
+        runLightsOut();
+        break;
+}
