@@ -34,12 +34,12 @@ function removeBlockingOverlay() {
 
 /**
  * Handles messages received from the iframe or other sources.
+ * Doesn't matter if vulnerable since emergency button exists.
  * @param {MessageEvent} event - The message event object.
 */
 function handleMessages(event) {
-    // Check if the message is the one we expect from our overlay
     if (event.data && event.data.type === 'CLOSE_OVERLAY') {
-        console.log('Received CLOSE_OVERLAY message from iframe.');
+        console.log('Removing overlay...');
         removeBlockingOverlay();
     }
 }

@@ -7,7 +7,9 @@
       "default_popup": "popup.html",
       "default_icon": "nerd.png"
     },
-    "permissions": [],
+    "permissions": [
+        "storage"
+    ],
     "host_permissions": [
         "*://www.youtube.com/*",
         "*://x.com/*",

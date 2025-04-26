@@ -9,10 +9,19 @@ const dirs = [
     [-1, 0] // Up
 ];
 
+const DIFFICULTY = {
+    EASY: 0,
+    MEDIUM: 1,
+    HARD: 2
+};
+
+let currentDifficulty = DIFFICULTY.MEDIUM; // Default difficulty
+
 // -------------------- Sliding Puzzle Game Logic --------------------
 
+const slidingPuzzleGrids = [3, 4, 6]; // Different grid sizes for different difficulties
 function runSlidingPuzzle() {
-    const grid = generateSlidingPuzzleGrid();
+    const grid = generateSlidingPuzzleGrid(slidingPuzzleGrids[currentDifficulty]); // Generate a random grid based on difficulty
     const tiles = drawSlidingPuzzle(grid);
 
     // Find the empty tile position
@@ -51,16 +60,15 @@ function runSlidingPuzzle() {
 
 }
 
-function generateSlidingPuzzleGrid() {
+function generateSlidingPuzzleGrid(gridSize) {
     // Create a 6x6 sliding puzzle game
-    const gridSize = 6;
     const grid = Array.from({ length: gridSize }, (_, i) => Array.from({ length: gridSize }, (_, j) => i * gridSize + j));
     grid[gridSize - 1][gridSize - 1] = null; // Empty space
     
     let i = gridSize - 1;
     let j = gridSize - 1;
     // Shuffle the grid
-    for (let x = 0; x < 500; x++) {
+    for (let x = 0; x < 1000; x++) {
         const dir = dirs[Math.floor(Math.random() * 4)];
         const ni = i + dir[0];
         const nj = j + dir[1];
@@ -92,7 +100,7 @@ function drawSlidingPuzzle(grid) {
             tileElement.textContent = tile !== null ? tile + 1 : ''; // Show number or empty
             tileElement.style.gridRowStart = i + 1;
             tileElement.style.gridColumnStart = j + 1;
-            tileElement.style.backgroundColor = getSlidingPuzzleTileColor(tile); // Set color based on position
+            tileElement.style.backgroundColor = getSlidingPuzzleTileColor(tile, grid.length); // Set color based on position
             tileElement.style.color = "black"; // Set text color to black for better visibility
             container.appendChild(tileElement);
             tiles[i][j] = tileElement; // Store the tile element
@@ -108,15 +116,15 @@ function updateSlidingPuzzle(tiles, loc1, loc2) {
     [tiles[loc1[0]][loc1[1]].style.backgroundColor, tiles[loc2[0]][loc2[1]].style.backgroundColor] = [tiles[loc2[0]][loc2[1]].style.backgroundColor, tiles[loc1[0]][loc1[1]].style.backgroundColor]; // Swap background color
 }
 
-function getSlidingPuzzleTileColor(val) {
+function getSlidingPuzzleTileColor(val, gridSize) {
     if (val === null) {
         return 'gray'; // Empty space color
     }
 
     // Calculate position in spectrum - value between 0 and 1
-    const i = Math.floor(val / 6); // Row index (0-5)
-    const j = val % 6; // Column index (0-5)
-    const position = Math.min(i, j) / 5; // Normalize to [0, 1]
+    const i = Math.floor(val / gridSize); // Row index (0-5)
+    const j = val % gridSize; // Column index (0-5)
+    const position = Math.min(i, j) / (gridSize - 1); // Normalize to [0, 1]
     
     // Red to Yellow to Green gradient
     let r, g;
@@ -135,8 +143,10 @@ function getSlidingPuzzleTileColor(val) {
 
 // -------------------- Minesweeper Game Logic --------------------
 
+const minesweeperGrids = [[10, 10], [15, 40], [20, 80]];
 function runMinesweeper() {
-    let grid = generateMinesweeperGrid(20, 25, 99);
+    const gridInfo = [minesweeperGrids[currentDifficulty][0], minesweeperGrids[currentDifficulty][1]];
+    let grid = generateMinesweeperGrid(gridInfo[0], gridInfo[0], gridInfo[1]); // Generate a random grid based on difficulty
     let visible = Array.from({ length: grid.length }, () => Array(grid[0].length).fill(false));
     let tiles = drawMinesweeper(grid, visible);
 
@@ -152,7 +162,7 @@ function runMinesweeper() {
                     enabled = false; // Disable further clicks
                     alert(loseMessage);
 
-                    grid = generateMinesweeperGrid(20, 25, 99); // Regenerate the grid
+                    grid = generateMinesweeperGrid(gridInfo[0], gridInfo[0], gridInfo[1]); // Regenerate the grid
                     visible = Array.from({ length: grid.length }, () => Array(grid[0].length).fill(false)); // Reset visibility
                     updateMinesweeper(grid, tiles, visible); // Redraw the grid
                     enabled = true; // Re-enable clicks
@@ -258,6 +268,7 @@ function checkMinesweeperWin(grid, visible) {
 }
 
 const mineSweeperTileColors = ['lightgray', 'blue', 'green', 'red', 'purple', 'orange', 'teal', 'navy', 'black'];
+
 function getMinesweeperTileColor(val) {
     if (val === -1) {
         return 'black'; // Mine color
@@ -270,8 +281,9 @@ function getMinesweeperTileColor(val) {
 
 // -------------------- Lights Out Game Logic --------------------
 
+const lightsOutGrids = [3, 5, 9]; // Different grid sizes for different difficulties
 function runLightsOut() {
-    const grid = generateLightsOutGrid(9, 9);
+    const grid = generateLightsOutGrid(lightsOutGrids[currentDifficulty]);
     const tiles = drawLightsOut(grid);
 
     // Add event listeners for cell clicks
@@ -301,17 +313,17 @@ function runLightsOut() {
     });
 }
 
-function generateLightsOutGrid(rows, cols) {
-    const grid = Array.from({ length: rows }, () => Array(cols).fill(false));
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
+function generateLightsOutGrid(gridSize) {
+    const grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(false));
+    for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
             // Toggle the light with a 50% chance
             if (Math.random() < 0.5) {
                 grid[i][j] = !grid[i][j];
                 for (const [di, dj] of dirs) {
                     const ni = i + di;
                     const nj = j + dj;
-                    if (ni >= 0 && ni < rows && nj >= 0 && nj < cols) {
+                    if (ni >= 0 && ni < gridSize && nj >= 0 && nj < gridSize) {
                         grid[ni][nj] = !grid[ni][nj]; // Toggle adjacent lights
                     }
                 }
@@ -354,20 +366,30 @@ function updateLightsOut(grid, tiles) {
 }
 
 // Game
-switch (Math.floor(Math.random() * 3)) {
-    case 0:
-        // 6x6 Sliding Puzzle
-        console.log('Running Sliding Puzzle...');
-        runSlidingPuzzle();
-        break;
-    case 1:
-        // 20x25 99 Minesweeper
-        console.log('Running Minesweeper...');
-        runMinesweeper();
-        break;
-    case 2:
-        // 9x9 Lights Out
-        console.log('Running Lights Out...');
-        runLightsOut();
-        break;
+function startGame() {
+    chrome.storage.local.get(['difficulty'], (result) => {
+        if (result.difficulty) {
+            currentDifficulty = DIFFICULTY[result.difficulty]; // Set difficulty from storage
+        }
+        console.log('Setting difficulty to:', currentDifficulty);
+        switch (Math.floor(Math.random() * 3)) {
+            case 0:
+                // 6x6 Sliding Puzzle
+                console.log('Running Sliding Puzzle...');
+                runSlidingPuzzle();
+                break;
+            case 1:
+                // 20x25 99 Minesweeper
+                console.log('Running Minesweeper...');
+                runMinesweeper();
+                break;
+            case 2:
+                // 9x9 Lights Out
+                console.log('Running Lights Out...');
+                runLightsOut();
+                break;
+        }
+    });
 }
+
+startGame(); // Start the game

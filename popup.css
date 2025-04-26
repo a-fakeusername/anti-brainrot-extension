@@ -1,0 +1,42 @@
+body {
+    width: 300px;
+    padding: 10px;
+    font-family: sans-serif;
+}
+
+.diff-button {
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#diff-easy {
+    background-color: #4CAF50; /* Green */
+}
+
+#diff-easy:hover {
+    background-color: #45A049; /* Darker green on hover */
+}
+
+#diff-medium {
+    background-color: #FFEB3B; /* Yellow */
+    color: black; /* Black text for better contrast */
+}
+
+#diff-medium:hover {
+    background-color: #FBC02D; /* Darker yellow on hover */
+}
+
+#diff-hard {
+    background-color: #F44336; /* Red */
+}
+#diff-hard:hover {
+    background-color: #D32F2F; /* Darker red on hover */
+}
+
+.diff-selected {
+    border: 2px solid #000; /* Black border for selected difficulty */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Shadow effect for selected difficulty */
+}
