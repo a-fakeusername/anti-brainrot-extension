@@ -66,14 +66,13 @@ function runSlidingPuzzle() {
 }
 
 function generateSlidingPuzzleGrid(gridSize) {
-    // Create a 6x6 sliding puzzle game
     const grid = Array.from({ length: gridSize }, (_, i) => Array.from({ length: gridSize }, (_, j) => i * gridSize + j));
     grid[gridSize - 1][gridSize - 1] = null; // Empty space
     
     let i = gridSize - 1;
     let j = gridSize - 1;
     // Shuffle the grid
-    for (let x = 0; x < 1000; x++) {
+    for (let x = 0; x < 100000; x++) {
         const dir = dirs[Math.floor(Math.random() * 4)];
         const ni = i + dir[0];
         const nj = j + dir[1];
